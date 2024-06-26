@@ -37,7 +37,7 @@ pipeline {
             steps {
                 script {
                     // Using sshCommand to execute a command on a remote server
-                    sshCommand remote: [name: "${prod_ip}", credentialsId: 'ssh-ubuntusrv'], command: "docker ps >> command.txt"
+                    sshCommand remote: [name: "${prod_ip}", credentialsId: "${prod-ssh-key}"], command: "docker ps >> command.txt"
                 }
             }
         }
