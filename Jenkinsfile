@@ -9,14 +9,29 @@ pipeline {
     }
 
     stages {
-        stage('Build') { 
+        stage('Customize index.html') { 
             steps {
-                echo 'Building..'
+                script {
+                    sh 'sed -i "s/Build Number:/& ${BUILD_NUMBER}/g" index.html'
+                }
             }
         }
-        stage('Test'){
+    stages {
+        stage('Build simple_app image') { 
+            steps {
+                script {
+                    // sh 'docker build -t ${ImageName}:${BUILD_NUMBER} .'
+                    dockerImage = docker.build("${ImageName}:${BUILD_NUMBER}" , '.')
+                }
+            }
+        }
+        stage('Push image to Docker Hub') {
             steps{
-                echo 'Testing..'
+                script {
+                    docker.withRegistry('', dockergubCreds) {
+                        dockerImage.push()
+                    }
+                }
             }
         }
         stage('Deploy') {
