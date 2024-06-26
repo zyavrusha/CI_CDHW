@@ -5,7 +5,8 @@ pipeline {
         ImageName = 'zyavrusha/nginx_app_task3'
         dockerhubCreds = 'docker-hub' //github credentials
         git_ssh_key = 'git_ssh_access'//access to the git via ssh
-        prod_server = 'ubuntusrv' //access to the prod server
+        prod_ip = '192.168.0.237' //prod server ip
+        prod_access = 'ubuntusrv' //access to the prod server
     }
 
     stages {
