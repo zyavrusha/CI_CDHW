@@ -21,8 +21,6 @@ pipeline {
         stage('Build simple_app image') { 
             steps {
                 script {
-                    sh 'echo "Building the image with build number ${BUILD_NUMBER}" >> build.txt'
-                    // sh 'docker build -t ${ImageName}:${BUILD_NUMBER} .'
                     dockerImage = docker.build("${ImageName}" , '.')
                 }
             }
@@ -41,8 +39,8 @@ pipeline {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'ubuntusrv', passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
                     script {
-                        // Example of using the credentials to make an HTTP request
-                        sh 'pwd >> docker_ps.txt'
+                        // connect to remote server 
+                        sh "ssh ${USERNAME}@${prod_ip} ' docker ps >> command.txt'"
             }
         }
     }
