@@ -46,6 +46,7 @@ pipeline {
                         sh 'docker ps -a >> docker_ps.txt'
             }
         }
+    }
         stage('Deploy') {
             steps{
                 echo 'Deploying....'
