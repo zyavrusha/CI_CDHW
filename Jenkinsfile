@@ -34,14 +34,11 @@ pipeline {
                 }
             }
         }
-
         stage('Clean up environment') {
             steps {
-                sshagent(['ssh-ubuntusrv']) {
-                    script {
-                        // SSH command using key-based authentication
-                        sh "ssh -o StrictHostKeyChecking=no ${USERNAME}@${prod_ip} 'docker ps >> command.txt'"
-                    }
+                script {
+                    // Using sshCommand to execute a command on a remote server
+                    sshCommand remote: [name: "${prod_id}", credentialsId: 'ssh-ubuntusrv'], command: "docker ps >> command.txt"
                 }
             }
         }
