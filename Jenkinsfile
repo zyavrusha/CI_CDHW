@@ -37,10 +37,10 @@ pipeline {
 
         stage('Clean up environment') {
             steps {
-                withCredentials([usernamePassword(credentialsId: 'ubuntusrv', passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
+                sshagent(['ssh-ubuntusrv']) {
                     script {
-                        // Using sshpass to provide the password for the SSH connection
-                        sh "sshpass -p ${PASSWORD} ssh -o StrictHostKeyChecking=no ${USERNAME}@${prod_ip} 'docker ps >> command.txt'"
+                        // SSH command using key-based authentication
+                        sh "ssh -o StrictHostKeyChecking=no ${USERNAME}@${prod_ip} 'docker ps >> command.txt'"
                     }
                 }
             }
