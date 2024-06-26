@@ -22,7 +22,7 @@ pipeline {
                 script {
                     echo "Building the image with build nuber ${BUILD_NUMBER}"
                     // sh 'docker build -t ${ImageName}:${BUILD_NUMBER} .'
-                    dockerImage = docker.build("${ImageName}:${BUILD_NUMBER}" , '.')
+                    dockerImage = docker.build("${ImageName}" , '.')
                 }
             }
         }
