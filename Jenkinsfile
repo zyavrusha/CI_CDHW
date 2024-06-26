@@ -4,9 +4,8 @@ pipeline {
         ImageName = "zyavrusha/nginx_app_task3:${BUILD_NUMBER}"
         dockerhubCreds = 'docker-hub' //github credentials
         git_ssh_key = 'git_ssh_access'//access to the git via ssh
-        prod_user = 'iryna' //prod server user
         prod_ip = '192.168.0.237' //prod server ip
-        prod_access = 'ubuntusrv' //credential created in Jenkins to access to the Prod server
+        prod-ssh-key = 'ssh-ubuntusrv' //access to the prod server via sshtra tran
     }
 
     stages {
@@ -38,7 +37,7 @@ pipeline {
             steps {
                 script {
                     // Using sshCommand to execute a command on a remote server
-                    sshCommand remote: [name: "${prod_id}", credentialsId: 'ssh-ubuntusrv'], command: "docker ps >> command.txt"
+                    sshCommand remote: [name: "${prod_ip}", credentialsId: 'ssh-ubuntusrv'], command: "docker ps >> command.txt"
                 }
             }
         }
