@@ -43,6 +43,7 @@ pipeline {
                     remote.name = "${prodName}"
                     remote.host = "${prodIp}"
                     remote.user = "${prodUser}"
+                    remote.known_hosts = "${pathToKnownHosts}"
                     remote.identityId = "${prodSshKey}"
                     remote.allowAnyHosts = false
                     sshCommand remote: remote, command: "ls -lrt >> command.txt"
