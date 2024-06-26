@@ -14,7 +14,7 @@ pipeline {
         stage('Customize index.html') { 
             steps {
                 script {
-                    sh 'sed -i "s/Build Number:/& ${BUILD_NUMBER}/g" index.html'
+                    sh 'sed -i "s/Build Number:/& $BUILD_NUMBER/g" index.html'
                 }
             }
         }
@@ -22,7 +22,7 @@ pipeline {
         stage('Build simple_app image') { 
             steps {
                 script {
-                    echo "Building the image with build nuber ${BUILD_NUMBER}">> build.txt
+                    sh 'echo "Building the image with build number ${BUILD_NUMBER}" >> build.txt'
                     // sh 'docker build -t ${ImageName}:${BUILD_NUMBER} .'
                     dockerImage = docker.build("${ImageName}" , '.')
                 }
