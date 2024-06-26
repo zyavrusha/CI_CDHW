@@ -36,14 +36,14 @@ pipeline {
             }
         }
 
-        node {
+        stage('Deploy to production') {
         def remote = [:]
         remote.name = "${prodName}"
         remote.host = "${prodIp}"
         remote.user = "${prodUser}"
         remote.identityId = "${prodSshKey}"
         remote.allowAnyHosts = false
-        stage('Remote SSH') {
+        steps {
             sshCommand remote: remote, command: "ls -lrt >> command.txt"
             //sshCommand remote: remote, command: "for i in {1..5}; do echo -n \"Loop \$i \"; date ; sleep 1; done"
   }
