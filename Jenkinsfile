@@ -2,7 +2,7 @@ pipeline {
     agent any 
     environment {
         BUILD_NUMBER = '${BUILD_NUMBER}' // Jenkins provided environment variable
-        ImageName = 'zyavrusha/nginx_app_task3'
+        ImageName = 'zyavrusha/nginx_app_task3:${BUILD_NUMBER}'
         dockerhubCreds = 'docker-hub' //github credentials
         git_ssh_key = 'git_ssh_access'//access to the git via ssh
         prod_user = 'iryna' //prod server user
