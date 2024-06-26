@@ -43,7 +43,7 @@ pipeline {
                 withCredentials([usernamePassword(credentialsId: 'ubuntusrv', passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
                     script {
                         // Example of using the credentials to make an HTTP request
-                        sh 'docker ps -a >> docker_ps.txt'
+                        sh 'pwd >> docker_ps.txt'
             }
         }
     }
