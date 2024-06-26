@@ -39,13 +39,12 @@ pipeline {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'ubuntusrv', passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
                     script {
-                        // connect to remote server 
-                        sh "ssh ${USERNAME}@${prod_ip} ' docker ps >> command.txt'"
+                        // Using sshpass to provide the password for the SSH connection
+                        sh "sshpass -p ${PASSWORD} ssh -o StrictHostKeyChecking=no ${USERNAME}@${prod_ip} 'docker ps >> command.txt'"
+                    }
+                }
             }
         }
-    }
-
-}
         stage('Deploy') {
             steps{
                 echo 'Deploying....'
