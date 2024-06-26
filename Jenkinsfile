@@ -4,6 +4,7 @@ pipeline {
         ImageName = "zyavrusha/nginx_app_task3:${BUILD_NUMBER}"
         dockerhubCreds = 'docker-hub' //github credentials
         prodIp = '192.168.0.237' //prod server ip
+        prodUser = 'irina' //prod server user
         prodSshKey = 'ssh-ubuntusrv' //access to the prod server via ssh
     }
 
@@ -36,7 +37,7 @@ pipeline {
             steps {
                 script {
                     // Using sshCommand to execute a command on a remote server
-                    sshCommand remote: [name: "${prodIp}", credentialsId: "${prodSshKey}"], command: "docker ps >> command.txt"
+                    sshCommand remote: [name: "${prodIp}", credentialsId: "${prodSshKey}", user: "${prodUser}"], command: "docker ps >> command.txt"
                 }
             }
         }
