@@ -5,8 +5,9 @@ pipeline {
         ImageName = 'zyavrusha/nginx_app_task3'
         dockerhubCreds = 'docker-hub' //github credentials
         git_ssh_key = 'git_ssh_access'//access to the git via ssh
+        prod_user = 'iryna' //prod server user
         prod_ip = '192.168.0.237' //prod server ip
-        prod_access = 'ubuntusrv' //access to the prod server
+        prod_access = 'ubuntusrv' //credential created in Jenkins to access to the Prod server
     }
 
     stages {
@@ -34,6 +35,15 @@ pipeline {
                         dockerImage.push()
                     }
                 }
+            }
+        }
+
+        stage('Clean up environment') {
+            steps {
+                withCredentials([usernamePassword(credentialsId: 'ubuntusrv', passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
+                    script {
+                        // Example of using the credentials to make an HTTP request
+                        sh 'docker ps -a >> docker_ps.txt'
             }
         }
         stage('Deploy') {
