@@ -3,7 +3,7 @@ pipeline {
     environment {
         BUILD_NUMBER = '${BUILD_NUMBER}' // Jenkins provided environment variable
         ImageName = 'zyavrusha/nginx_app_task3'
-        dockergubCreds = 'docker-hub' //github credentials
+        dockerhubCreds = 'docker-hub' //github credentials
         git_ssh_key = 'git_ssh_access'//access to the git via ssh
         prod_server = 'ubuntusrv' //access to the prod server
     }
@@ -16,7 +16,7 @@ pipeline {
                 }
             }
         }
-    stages {
+     
         stage('Build simple_app image') { 
             steps {
                 script {
@@ -28,7 +28,7 @@ pipeline {
         stage('Push image to Docker Hub') {
             steps{
                 script {
-                    docker.withRegistry('', dockergubCreds) {
+                    docker.withRegistry('', dockerhubCreds) {
                         dockerImage.push()
                     }
                 }
@@ -41,3 +41,4 @@ pipeline {
         }
     }
 }
+
