@@ -43,9 +43,9 @@ pipeline {
                     remote.name = "${prodName}"
                     remote.host = "${prodIp}"
                     remote.user = "${prodUser}"
-                    remote.known_hosts = "${pathToKnownHosts}"
                     remote.identityId = "${prodSshKey}"
                     remote.allowAnyHosts = false
+                    remote.known_hosts = "${pathToKnownHosts}"
                     sshCommand remote: remote, command: "ls -lrt >> command.txt"
                     //sshCommand remote: remote, command: "for i in {1..5}; do echo -n \"Loop \$i \"; date ; sleep 1; done"
                 }
