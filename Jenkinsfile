@@ -6,6 +6,7 @@ pipeline {
         prodIp = '192.168.0.237' //prod server ip
         prodUser = 'irina' //prod server user
         prodSshKey = 'ssh-ubuntusrv' //access to the prod server via ssh
+        pathToKnownHosts = '/var/lib/jenkins/.ssh' //path to known_hosts file
     }
 
     stages {
@@ -37,7 +38,7 @@ pipeline {
             steps {
                 script {
                     // Using sshCommand to execute a command on a remote server
-                    sshCommand remote: [name: "${prodIp}", credentialsId: "${prodSshKey}", user: "${prodUser}", known_hosts: '/var/lib/jenkins/.ssh'], command: "docker ps >> command.txt"
+                    sshCommand remote: [name: "${prodIp}", credentialsId: "${prodSshKey}", user: "${prodUser}", known_hosts: "${pathToKnownHosts}"], command: "docker ps >> command.txt"
                 }
             }
         }
