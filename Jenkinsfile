@@ -37,7 +37,7 @@ pipeline {
             steps {
                 script {
                     // Using sshCommand to execute a command on a remote server
-                    sshCommand remote: [name: "${prodIp}", credentialsId: "${prodSshKey}", user: "${prodUser}"], command: "docker ps >> command.txt"
+                    sshCommand remote: [name: "${prodIp}", credentialsId: "${prodSshKey}", user: "${prodUser}", known_hosts: '/var/lib/jenkins/.ssh'], command: "docker ps >> command.txt"
                 }
             }
         }
