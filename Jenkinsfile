@@ -39,7 +39,7 @@ pipeline {
         stage('Deploy to production') {
              steps {
                 script {
-                    withCredentials([sshUserPrivateKey(credentialsId: "${prodSshKey}", usernameVariable: 'sshUser' , passwordVariable: 'sshPass')]) {
+                    withCredentials([sshUserPrivateKey(credentialsId: env.prodSshKey, usernameVariable: 'sshUser' , passwordVariable: 'sshPass')]) {
                     println "sshUser: ${sshUser}" // Debugging line
                     def remote = [:]
                     remote.name = env.prodName // "${prodName}"
@@ -60,7 +60,7 @@ pipeline {
             steps {
                 script {
                     // Using sshCommand to execute a command on a remote server
-                    sshCommand remote: [name: 'ubuntusrv', host: '192.168.0.237', identityId: "${prodSshKey}", user: "${prodUser}", known_hosts: "${pathToKnownHosts}", allowAnyHosts: 'false' ], command: "docker ps >> containers_command.txt"
+                    sshCommand remote: [name: 'ubuntusrv', host: '192.168.0.237', identityId: prodSshKey, user: "${prodUser}", known_hosts: "${pathToKnownHosts}", allowAnyHosts: 'false' ], command: "docker ps >> containers_command.txt"
                 }
             }
         }
