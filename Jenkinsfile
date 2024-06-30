@@ -40,7 +40,7 @@ pipeline {
         stage('Deploy to production') {
              steps {
                 script {
-                    withCredentials([sshUserPrivateKey(credentialsId: env.prodSshKey, usernameVariable: env.sshUser )]) {
+                    withCredentials([sshUserPrivateKey(credentialsId: env.prodSshKey)]) {
                     println "sshUser: ${sshUser}" // Debugging line
                     def remote = [:]
                     remote.name = env.prodName // "${prodName}"
