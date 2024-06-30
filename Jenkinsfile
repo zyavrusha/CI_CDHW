@@ -40,6 +40,7 @@ pipeline {
              steps {
                 script {
                     withCredentials([sshUserPrivateKey(credentialsId: "${prodSshKey}", usernameVariable: 'sshUser' , passwordVariable: 'sshPass')]) {
+                    println "sshUser: ${sshUser}" // Debugging line
                     def remote = [:]
                     remote.name = env.prodName // "${prodName}"
                     remote.host = env.prod_ip // "${prodIp}"
