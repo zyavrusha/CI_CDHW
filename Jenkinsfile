@@ -46,7 +46,7 @@ pipeline {
                     remote.name = env.prodName // "${prodName}"
                     remote.host = env.prod_ip // "${prodIp}"
                     remote.user =  env.sshUser // "${prodUser}"
-                   // remote.identityId = "${prodSshKey}"
+                    remote.identityId = "${prodSshKey}"
                     remote.allowAnyHosts = false
                     remote.known_hosts = env.pathToKnownHosts // "${pathToKnownHosts}"
                     // remote.password = sshPass
