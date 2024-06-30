@@ -47,8 +47,8 @@ pipeline {
                     remote.host = env.prod_ip // "${prodIp}"
                     remote.user =  env.sshUser // "${prodUser}"
                     remote.identityId = env.prodSshKey
-                    remote.allowAnyHosts = false
-                    remote.known_hosts = env.pathToKnownHosts // "${pathToKnownHosts}"
+                    remote.allowAnyHosts = true
+                    // remote.known_hosts = env.pathToKnownHosts // "${pathToKnownHosts}"
                     // remote.password = sshPass
                     sshCommand remote: remote, command: "docker ps >> containers_command.txt"
                     }
