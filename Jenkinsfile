@@ -39,15 +39,17 @@ pipeline {
         stage('Deploy to production') {
              steps {
                 script {
+                    withCredentials([sshUserPrivateKey(credentialsId: "${prodSshKey}", usernameVariable: 'sshUser' , passwordVariable: 'sshPass')]) {
                     def remote = [:]
                     remote.name = "${prodName}"
                     remote.host = "${prodIp}"
-                    remote.user = "${prodUser}"
-                    remote.identityId = "${prodSshKey}"
+                    remote.user =  sshUser // "${prodUser}"
+                   // remote.identityId = "${prodSshKey}"
                     remote.allowAnyHosts = true
                     remote.known_hosts = "${pathToKnownHosts}"
-                    sshCommand remote: remote, command: "ls -lrt >> command.txt"
-                    //sshCommand remote: remote, command: "for i in {1..5}; do echo -n \"Loop \$i \"; date ; sleep 1; done"
+                    remote.password = sshPass
+                    sshCommand remote: remote, command: "docker ps >> containers_command.txt"
+                    }
                 }
             
             }
