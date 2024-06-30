@@ -45,7 +45,7 @@ pipeline {
                     def remote = [:]
                     remote.name = env.prodName // "${prodName}"
                     remote.host = env.prod_ip // "${prodIp}"
-                    remote.user =  sshUser // "${prodUser}"
+                    remote.user =  env.sshUser // "${prodUser}"
                    // remote.identityId = "${prodSshKey}"
                     remote.allowAnyHosts = false
                     remote.known_hosts = env.pathToKnownHosts // "${pathToKnownHosts}"
