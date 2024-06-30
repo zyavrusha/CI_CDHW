@@ -41,7 +41,7 @@ pipeline {
                 script {
                     withCredentials([sshUserPrivateKey(credentialsId: "${prodSshKey}", usernameVariable: 'sshUser' , passwordVariable: 'sshPass')]) {
                     def remote = [:]
-                    remote.name = "${prodName}"
+                    remote.name = env.prodName // "${prodName}"
                     remote.host = "${prodIp}"
                     remote.user =  sshUser // "${prodUser}"
                    // remote.identityId = "${prodSshKey}"
