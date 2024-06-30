@@ -8,7 +8,7 @@ pipeline {
         prodUser = 'irina' //prod server user
         prodSshKey = 'ssh-ubuntusrv' //access to the prod server via ssh
         pathToKnownHosts = '/var/lib/jenkins/.ssh' //path to known_hosts file
-        sshUser ='' //ssh user
+        sshUser = 'irina' //ssh user
     }
 
     stages {
