@@ -40,8 +40,8 @@ pipeline {
         stage('Deploy to production') {
              steps {
                 script {
-                    withCredentials([sshUserPrivateKey(credentialsId: env.prodSshKey)]) {
-                    println "sshUser: ${sshUser}" // Debugging line
+                    withCredentials([sshUserPrivateKey(credentialsId: env.prodSshKey, passwordVariable: 'sshPass')]) {
+                
                     def remote = [:]
                     remote.name = env.prodName // "${prodName}"
                     remote.host = env.prod_ip // "${prodIp}"
@@ -49,7 +49,7 @@ pipeline {
                    // remote.identityId = "${prodSshKey}"
                     remote.allowAnyHosts = false
                     remote.known_hosts = env.pathToKnownHosts // "${pathToKnownHosts}"
-                    //remote.password = sshPass
+                    remote.password = sshPass
                     sshCommand remote: remote, command: "docker ps >> containers_command.txt"
                     }
                 }
