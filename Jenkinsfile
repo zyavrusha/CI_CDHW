@@ -42,11 +42,11 @@ pipeline {
                     withCredentials([sshUserPrivateKey(credentialsId: "${prodSshKey}", usernameVariable: 'sshUser' , passwordVariable: 'sshPass')]) {
                     def remote = [:]
                     remote.name = env.prodName // "${prodName}"
-                    remote.host = "${prodIp}"
+                    remote.host = env.prod_ip // "${prodIp}"
                     remote.user =  sshUser // "${prodUser}"
                    // remote.identityId = "${prodSshKey}"
-                    remote.allowAnyHosts = true
-                    remote.known_hosts = "${pathToKnownHosts}"
+                    remote.allowAnyHosts = false
+                    remote.known_hosts = env.pathToKnownHosts // "${pathToKnownHosts}"
                     remote.password = sshPass
                     sshCommand remote: remote, command: "docker ps >> containers_command.txt"
                     }
