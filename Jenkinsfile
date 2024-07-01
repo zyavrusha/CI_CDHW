@@ -50,8 +50,8 @@ pipeline {
                     remote.allowAnyHosts = true
                     // remote.known_hosts = env.pathToKnownHosts // "${pathToKnownHosts}"
                     //remote.password = PASSWORD
-                    sshCommand remote: remote, command: "sudo docker rm \$(sudo docker ps -a -q) -f"
-                    sshCommand remote: remote, command: "sudo docker rmi \$(sudo docker images -q) -f"
+                    sshCommand remote: remote, command: "docker rm \$(docker ps -a -q) -f"
+                    sshCommand remote: remote, command: "docker rmi \$(docker images -q) -f"
                     }
                 }
             
@@ -72,7 +72,7 @@ pipeline {
                     remote.allowAnyHosts = true
                     // remote.known_hosts = env.pathToKnownHosts // "${pathToKnownHosts}"
                     //remote.password = PASSWORD
-                    sshCommand remote: remote, command: "sudo docker run -d -p 80:80 --name simple_app ${ImageName}"
+                    sshCommand remote: remote, command: "docker run -d -p 80:80 --name simple_app ${ImageName}"
                     
                     }
                 }
