@@ -44,7 +44,7 @@ pipeline {
                         echo "Hello , ${USERNAME}"
                     def remote = [:]
                     remote.name = env.prodName // "${prodName}"
-                    remote.host = env.prod_ip // "${prodIp}"
+                    remote.host = env.prodIp // "${prodIp}"
                     remote.user = USERNAME
                     remote.identityFile = SSH_KEY
                     remote.allowAnyHosts = true
