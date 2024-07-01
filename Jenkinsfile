@@ -37,11 +37,11 @@ pipeline {
             }
         }
 
-        stage('Deploy to production') {
+        stage('Clean up environment') {
              steps {
                 script {
                     withCredentials([sshUserPrivateKey(credentialsId: env.prodSshKey, keyFileVariable: 'SSH_KEY', usernameVariable: 'USERNAME')]) {
-                        echo "Hello , ${USERNAME}"
+                
                     def remote = [:]
                     remote.name = env.prodName // "${prodName}"
                     remote.host = env.prodIp // "${prodIp}"
@@ -50,24 +50,32 @@ pipeline {
                     remote.allowAnyHosts = true
                     // remote.known_hosts = env.pathToKnownHosts // "${pathToKnownHosts}"
                     //remote.password = PASSWORD
-                    sshCommand remote: remote, command: "docker ps >> containers_command.txt"
+                    sshCommand remote: remote, command: "sudo docker rm $(sudo docker ps -a -q) -f"
+                    sshCommand remote: remote, command: "sudo docker rmi $(sudo docker images -q) -f"
                     }
                 }
             
             }
         }
 
-        stage('Clean up environment') {
-            steps {
-                script {
-                    // Using sshCommand to execute a command on a remote server
-                    sshCommand remote: [name: 'ubuntusrv', host: '192.168.0.237', identityId: prodSshKey, user: "${prodUser}", known_hosts: "${pathToKnownHosts}", allowAnyHosts: 'false' ], command: "docker ps >> containers_command.txt"
-                }
-            }
-        }
+      
         stage('Deploy') {
             steps{
-                echo 'Deploying....'
+                script {
+                    withCredentials([sshUserPrivateKey(credentialsId: env.prodSshKey, keyFileVariable: 'SSH_KEY', usernameVariable: 'USERNAME')]) {
+                
+                    def remote = [:]
+                    remote.name = env.prodName // "${prodName}"
+                    remote.host = env.prodIp // "${prodIp}"
+                    remote.user = USERNAME
+                    remote.identityFile = SSH_KEY
+                    remote.allowAnyHosts = true
+                    // remote.known_hosts = env.pathToKnownHosts // "${pathToKnownHosts}"
+                    //remote.password = PASSWORD
+                    sshCommand remote: remote, command: "sudo docker run -d -p 80:80 --name simple_app ${ImageName}"
+                    
+                    }
+                }
             }
         }
     }
